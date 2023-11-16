@@ -1,0 +1,14 @@
+{%extends 'layouts/base.html'%} 
+{% load static %}
+{% block titulo %}DETALLE PROFESOR{% endblock titulo %}
+{% block content %}
+
+<a href="{%url 'lista_profesores' %}" class="btn btn-primary" >Volver</a>
+
+<h1>{{ object.nombre}}</h1>
+<p>{{ object.apellido }}</p>
+<h5>direccion: {{ object.calle }}  {{ object.nro }} , {{object.localidad}}</h5>
+
+
+
+{% endblock content %}

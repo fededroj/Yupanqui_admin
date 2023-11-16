@@ -1,0 +1,31 @@
+
+{%extends 'layouts/base.html'%} 
+ {% load crispy_forms_tags %}  
+{% load static %}
+{% block content %}
+
+
+<link rel="stylesheet" href="{% static "css/style.css" %}">
+<h3 class="text-center">Nuevo Profesor</h3>
+<p class="fs-5 text-center px-5">Datos del Profesor</p>
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+    <div class="col-md-6 col-md-offset-3">
+
+    
+      <form action="#"method="POST">
+        {% csrf_token %}
+        {{ form|crispy}}
+       
+        
+        <input type="submit" class="btn btn-success" value="Guardar">
+        <a href="{%url 'lista_profesores' %}" class="btn btn-primary" >Volver</a>
+      
+      </form>
+     
+
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

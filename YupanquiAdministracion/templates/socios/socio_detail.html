@@ -1,0 +1,124 @@
+{%extends 'layouts/base.html'%} 
+{% load static %}
+{% block titulo %}DETALLE SOCIO{% endblock titulo %}
+{% block content %}
+<a href="{%url 'index_socios' %}" class="btn btn-primary" >Volver</a> <a class="btn btn-success btn-md"href="{% url 'inscripcion' socio.id %}">INSCRIBIR A UNA ACTIVIDAD</a>
+<style>
+  /* Estilo para el contenedor de la foto carnet */
+  .foto-carnet {
+      border: 2px solid #000;
+      padding: 10px;
+      width: 150px; /* Ajusta el tamaño según sea necesario */
+      height: 200px; /* Ajusta el tamaño según sea necesario */
+      text-align: center;
+  }
+
+  /* Estilo para la foto dentro del contenedor */
+  .foto-carnet img {
+      max-width: 100%;
+      max-height: 100%;
+  }
+</style><div class="container">
+
+    <div class="card">
+      <!-- Foto de socio en la esquina superior izquierda -->
+      {% comment %} <img class="card-img-top" src="{{ socio.foto.url }}" alt="Foto de socio"> {% endcomment %}
+      {% comment %} <div class="card-body">
+        <!-- Datos del socio -->
+      <div class="foto-carnet">  <h5 class="card-title">{{ object.nombre }} {{ object.apellido }}</h5>
+        {% if socio.foto %}
+        <img src="{{ object.foto.url }}" alt="Foto de {{ object.nombre }} {{ object.apellido }}">
+    {% else %}
+        <p>No hay foto disponible</p>
+    {% endif %}
+  </div>
+        <p class="card-text">Número de Socio: {{ object.nroSocio }}</p>
+        <p class="card-text">Género: {{object.get_genero_display }}</p>
+        <p class="card-text">Email: {{ object.email }}</p>
+        <p class="card-text">DNI: {{ object.dni }}</p>
+        <p class="card-text">Teléfono: {{ object.tel }}</p>
+        <p class="card-text">Dirección: {{ object.calle }} {{ object.nro }}, {{ object.localidad }}</p>
+        <p class="card-text">Estado: {{ object.get_estado_display }}</p>
+        <p class="card-text bx-1">Estado: {{ object.observaciones_importantes }}</p>
+        p
+      </div>
+    </div>
+  </div>" {% endcomment %}
+  <style>
+    /* Estilo para el contenedor de la foto carnet */
+    .foto-carnet {
+        border: 2px solid #000;
+        padding: 10px;
+        width: 150px; /* Ajusta el tamaño según sea necesario */
+        height: 200px; /* Ajusta el tamaño según sea necesario */
+        text-align: center;
+    }
+
+    /* Estilo para la foto dentro del contenedor */
+    .foto-carnet img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <!-- Columna para la foto -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="foto-carnet">
+                        
+                        {% if socio.foto %}
+                            <img src="{{ object.foto.url }}" alt="Foto de {{ object.nombre }} {{ object.apellido }}">
+                        {% else %}
+                            <p>No hay foto disponible</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna para los datos del socio -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text"><strong><h5 class="card-title">{{ object.nombre }} {{ object.apellido }}</h5></strong></p>
+                    <p class="card-text">Número de Socio: <strong> {{ object.nroSocio }}</strong></p>
+                    <p class="card-text">Género: <strong>{{object.get_genero_display }}</strong></p>
+                    <p class="card-text">Email: <strong>{{ object.email }}</strong></p>
+                    <p class="card-text">DNI: <strong>{{ object.dni }}</strong></p>
+                    <p class="card-text">Teléfono: <strong>{{ object.tel }}</strong></p>
+                    <p class="card-text">Dirección:<strong> {{ object.calle }} {{ object.nro }}, {{ object.localidad }}</strong></p>
+                    <p class="card-text">Estado: {{ object.get_estado_display }}</strong></p>
+                    <p class="card-text bx-1">Observaciones: {{ object.observaciones_importantes }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+  <div class="container">
+
+    {% for inscripcion in inscripciones %}
+    <div class="card">
+      <div class="card-body">
+        <a href="{% url 'editar_inscripcion' inscripcion.pk %}" class="btn btn-warning btn-sm"> editar</a>
+        <a href="{%url 'eliminar_inscripcion' inscripcion.pk %}" class="btn btn-danger btn-sm" >Eliminar</a>
+        <!-- Datos de la inscripción -->
+        <h5 class="card-title">Inscripto en : {{ inscripcion.actividad }}</h5>
+        <p class="card-text">Fecha de Inscripción: {{ inscripcion.fecha_inscripcion }}</p>
+        <p class="card-text">Actividad: {{ inscripcion.actividad }}</p>
+        <p class="card-text">Categoría: {{ inscripcion.categoria }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  
+
+  
+   
+</div>
+
+{% endblock content %}

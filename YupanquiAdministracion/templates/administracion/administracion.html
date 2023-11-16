@@ -1,0 +1,45 @@
+{%extends 'layouts/base.html'%} 
+{% load static %}
+{% block titulo %}ADMINISTRACION{% endblock titulo %}
+{% block content %}
+
+<a href="crear_profesor">
+  <button type="button" class="btn btn-success m-3"> + Nuevo Profesor</button>
+</a>
+<a href="crear_actividad">
+  <button type="button" class="btn btn-success m-3"> + Nueva Actividad</button>
+</a>
+<a href="crear_categoria">
+  <button type="button" class="btn btn-success m-3"> + categorias</button>
+</a>
+<div class=" col-sm-12 col-md-6 col-lg-8 col-xl-8">
+<div class="table-responsive">
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      
+      <th>Actividad</th>
+      
+      <th>Profesor</th>
+      <th>Categorias</th>
+    </tr>
+  </thead>
+  <tbody>
+     {% for a in administracion %} 
+   <tr>
+      <td>{{a.nombre}}</td>
+      
+      <td>{{ a.actividad}} </td>
+      <td>{{ a.categorias}} </td>
+      
+      
+    </tr>
+    {% endfor %}
+     
+  </tbody>
+</table>
+
+</div>
+</div>
+
+    {% endblock content %}

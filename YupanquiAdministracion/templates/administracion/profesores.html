@@ -1,0 +1,82 @@
+{%extends 'layouts/base.html'%} 
+{% load static %}
+{% block titulo %}ADMINISTRACION{% endblock titulo %}
+{% block content %}
+
+{% for message in messages %}
+    <div class="{% if message.tags %}alert alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+    </div>
+{% endfor %}
+ <br>
+<link rel="stylesheet" href="{% static "css/style.css" %}">
+
+<div class="container">
+
+
+
+    
+    <div class="left">      
+      <div class="card m-1">
+        <div class="card-body">
+          <a href="{%url 'crear_profesor' %}" class="btn btn-success" >Nuevo Profesor</a>
+          <h3>Buscar Profesor</h3>
+
+          <form method="get" action="{% url 'lista_profesores' %}" >
+            <div class="form-group">
+              <input type="text" id="q" name="q" class="form-control" placeholder="Nombre o Apellido">
+          
+            <button type="submit" class="btn btn-primary">Buscar</button>
+          </div>
+          </form>
+
+        </div>
+      </div>
+        </div>
+
+
+<div class="right">
+  <div class="table-responsive">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>acción</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% if profesores %}
+       {% for profesor in profesores %} 
+     <tr>
+      <td>{{profesor.id}} </td>
+        <td>{{profesor.nombre}}</td>
+        <td>{{ profesor.apellido }} </td>
+        
+        
+     
+          <td>
+            <a href="{% url 'editar_profesor' profesor.id %}"class="btn btn-warning btn-sm">Editar</a>
+           
+            <a href="{% url 'eliminar_profesor' profesor.id %}"class="btn btn-danger btn-sm">Eliminar</a>
+            <a href="{% url 'detalle_profesor' profesor.id %}"class="btn btn-primary btn-sm">Ver Más</a>
+            
+           
+          </td>
+        
+        
+      </tr>
+     
+      {% endfor %}
+       {% endif %}
+    </tbody>
+  </table>
+  
+  </div>
+
+    </div>
+  </div> 
+
+    {% endblock content %}

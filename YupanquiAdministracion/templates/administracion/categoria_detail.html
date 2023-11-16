@@ -1,0 +1,15 @@
+{%extends 'layouts/base.html'%} 
+{% load static %}
+{% block titulo %}DETALLE CATEGORIA{% endblock titulo %}
+{% block content %}
+
+<a href="{%url 'lista_categorias' %}" class="btn btn-primary" >Volver</a>
+
+<h1>{{ object.id}}</h1>
+<p>{{ object.categoria }}</p>
+<p>{{ object.actividad }}</p>
+
+
+<a href="{%url 'lista_categorias' %}" class="btn btn-primary" >Volver</a>
+
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    
+
+    <form method="get" action="{% url 'lista_socios' %}" class="mb-3">
+        <div class="input-group">
+            <input type="text" id="q" name="q" class="form-control" placeholder="Nombre o Apellido">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+   
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nro. Socio</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Pagar</th>
+                <th>Detalle</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for socio in socios %}
+                <tr>
+                    <td>{{ socio.nroSocio }}</td>
+                    <td>{{ socio.nombre }}</td>
+                    <td>{{ socio.apellido }}</td>
+                  
+                      <td>  
+                        <a href="{% url 'detalle_socio' socio.id %}" class="btn btn-secondary" >Cuota Social</a>
+                    
+                      <a  href="{% url 'editar_socio' socio.id %}"class="btn btn-warning">Cuota Actividad</a>
+                      
+                      </td>
+                      <td>
+                        <a href="{% url 'eliminar_socio' socio.id %}" class="btn btn-primary">Ver mas</a>
+                      </td>
+                    <th>
+                       
+                        
+              {% endfor %}         
+                
+           
+        </tbody>
+    </table>
+</div>
+
+  
+{% endblock content%}

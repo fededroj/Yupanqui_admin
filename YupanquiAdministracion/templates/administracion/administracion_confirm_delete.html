@@ -1,0 +1,14 @@
+{%extends 'layouts/base.html'%} 
+{% load crispy_forms_tags %} 
+
+{% block content %}
+{% endblock %}
+
+{% block body %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <P><strong>¿Elimiar registro? {{object}}</strong></P>
+    <button type="submit" class="btn btn-danger">Confimar</button>
+</form>
+{% endblock body %}

@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block titulo %}EDITAR ACTIVIDAD{% endblock titulo %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col"></div>       
+        
+        <div class="col">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                {{ form|crispy}}
+                
+                <div class="text-center">
+                    <input class="btn btn-md btn-success " type="submit" value="MODIFICAR SOCIO"><a href="{%url 'index_socios' %}" class="btn btn-primary" >Volver</a>
+                </div>
+                    </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+  
+
+</div>
+
+
+{% endblock content %}

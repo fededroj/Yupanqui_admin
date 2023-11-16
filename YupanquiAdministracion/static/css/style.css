@@ -1,0 +1,99 @@
+
+nav{
+    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Rubik', sans-serif;
+
+}
+/* *{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+
+} */
+/* .content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    
+ }
+ .container-index{
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+ } */
+ header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333; /* Color de fondo del header */
+    color: #fff; /* Color del texto */
+    padding: 10px; /* Espaciado interior del header */
+    height: 20%;
+}
+
+.logo img {
+    max-width: 5%; /* Ancho máximo de la imagen del logo */
+    /* height: auto; Ajusta la altura automáticamente */
+}
+
+.nombre {
+    flex-grow: 1; /* Hace que ocupe todo el espacio restante */
+    text-align: start; /* Centra el contenido horizontalmente */
+}
+
+.nombre h1 {
+    font-size: 24px; /* Tamaño de fuente del nombre */
+    margin: 0; /* Elimina el margen superior e inferior del nombre */
+    text-align: start;
+    margin-left: 30px;
+}
+header, nav {
+    width: 100%;
+}
+/* Estilos para dispositivos con un ancho de pantalla menor o igual a 768px, como tabletas y dispositivos móviles */
+/* Estilos para dispositivos con un ancho de pantalla menor o igual a 768px, como tabletas y dispositivos móviles */
+@media (max-width: 768px) {
+    /* Establecer un ancho máximo para el header y el nav */
+    header, nav {
+        max-width: 100%; /* Ancho máximo del 100% del viewport */
+        padding: 10px; /* Añade un espaciado interior */
+        box-sizing: border-box; /* Incluye el padding en el ancho total */
+    }
+
+    header {
+        text-align: center; /* Centra el contenido horizontalmente */
+    }
+
+    .logo img {
+        max-width: 30px; /* Ancho máximo del 100% del contenedor */
+        height: auto; /* Ajusta la altura automáticamente */
+    }
+
+    .nombre h1 {
+        font-size: 20px; /* Tamaño de fuente del nombre */
+        margin: 10px 0; /* Añade un margen superior e inferior al nombre */
+    }
+
+    nav {
+        text-align: center; /* Centra el contenido horizontalmente */
+    }
+
+    .navbar {
+        margin: 10px 0; /* Añade un margen superior e inferior */
+    }
+    
+    .navbar-nav {
+        text-align: center;
+    }
+    
+    .nav-item {
+        margin: 5px 0;
+    }
+
+    .btn {
+        margin: 10px auto;
+        display: block;
+    }
+}
+

@@ -1,0 +1,47 @@
+{%extends 'layouts/base.html'%} 
+{% load static %}
+
+{% block titulo %}CATEGORIAS{% endblock titulo %}
+{% block content %}
+
+{% for message in messages %}
+    <div class="{% if message.tags %}alert alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+    </div>
+{% endfor %}
+<a href="{% url 'crear_categoria' %}" class="btn btn-md btn-success">+ Crear Categoria</a>
+<div class="col"></div>
+<div class="col">
+   
+    <div class="table-responsive">
+      <table class="table table-striped">
+      <thead>
+        <tr>
+        
+          <th>Categorias</th>
+          <th>actividad</th>
+          
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% if categorias %}
+         {% for categoria in categorias %} 
+       <tr>
+        <td>{{categoria.categoria}} </td>
+          <td>{{categoria.actividad}}</td>
+         
+          
+          <td>
+            <a href="{% url 'editar_categoria' categoria.id %}"class="btn btn-warning btn-sm">editar</a>
+            <a href="{% url 'eliminar_categoria' categoria.id %}"class="btn btn-danger btn-sm">Eliminar</a>
+            <a href="{% url 'detalle_categoria' categoria.id %}"class="btn btn-primary btn-sm">Ver Más</a>
+            
+            {% comment %} <a href="{% url 'eliminar_actividad'actividad.id %}" title="Eliminar" class="btn btn-danger"></a> {% endcomment %}
+          </td>
+          
+        </tr>
+       <div class="col"></div>
+        {% endfor %}
+         {% endif %}
+{% endblock content %}

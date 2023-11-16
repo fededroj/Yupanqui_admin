@@ -1,0 +1,40 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% comment %} <div class="container">
+
+    
+    <div class="card">
+      <div class="card-body">
+        <!-- Datos de la inscripción -->
+        <h5 class="card-title">Inscripción de {{ inscripcion.socio.nombre }} {{ inscripcion.socio.apellido }}</h5>
+        <p class="card-text">Fecha de Inscripción: {{ inscripcion.fecha_inscripcion }}</p>
+        <p class="card-text">Actividad: {{ inscripcion.actividad.nombre }}</p>
+        <p class="card-text">Categoría: {{ inscripcion.categoria.categoria }}</p>
+      </div>
+    </div>
+  </div> {% endcomment %}
+  <div class="card">
+    <div class="card-body">
+      <!-- Datos de la inscripción -->
+      <h5 class="card-title">{{ object.socio.nombre }} {{object.socio.apellido}}</h5>
+      <p class="card-text">Fecha de Inscripción: {{ object.fecha_inscripcion }}</p>
+      <p class="card-text">Actividad: {{ object.actividad }}</p>
+      <p class="card-text">Categoría: {{ object.categoria }}</p>
+    </div>
+  </div>
+  <title>Inscripcion Detail</title>
+</head>
+<body>
+    <h1>Detalles de Inscripcion</h1>
+    <p>Socio: {{ socio_instance.nombre }} {{ socio_instance.apellido }}</p>
+    <p>Actividad: {{ object.actividad }}</p>
+    <p>Categoria: {{ object.categoria }}</p>
+    <p>Fecha de Inscripcion: {{ object.fecha_inscripcion }}</p>
+</body>
+</html>
+
+
+{% endblock content %}

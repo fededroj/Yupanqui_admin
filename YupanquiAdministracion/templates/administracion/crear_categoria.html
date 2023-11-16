@@ -1,0 +1,31 @@
+{%extends 'layouts/base.html'%} 
+{% load static %}
+{% load crispy_forms_tags %}
+{% block titulo %}NUEVA CATEGORIA{% endblock titulo %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{% static "css/style.css" %}">
+
+
+
+
+    
+ <form  action="#" method="post">
+    {% csrf_token %}
+    
+    {{ form|crispy}}
+    
+ 
+        <input class="btn btn-lg btn-secondary" type="submit" value="CREAR CATEGORIA">
+    
+    <a href="{%url 'lista_actividades' %}" class="btn btn-primary" >Volver</a>
+        </form>
+
+
+
+    
+
+
+
+{% endblock content %}

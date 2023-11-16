@@ -1,0 +1,17 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    
+    <h2>{{ object.nombre }} {{ object.apellido }}</h2>
+    
+    <!-- Muestra los detalles del socio, como su número de socio, DNI, etc. -->
+
+    <h3>Registro de Pago de Cuota Actividad</h3>
+    <form method="post">
+        <h2>{{ object.nombre }} {{ object.apellido }}</h2>
+        {% csrf_token %}
+        {{form|crispy}}
+        <input class="btn btn-lg btn-secondary" type="submit" value="Registrar Pago">
+    </form>
+</div>
+{% endblock %}

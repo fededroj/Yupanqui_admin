@@ -1,0 +1,26 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block titulo %}{% endblock titulo %}
+
+
+{% block content %}
+<div class="center-block">
+    <div class="row">
+   
+   <div>
+       <form action="" method="post">
+   {% csrf_token %}
+   <p><h3>¿Desear eliminar <strong> ?</strong></h3></p>
+   
+
+   <div class="text-center">
+       <input class="btn btn-lg btn-danger" type="submit" value="Eliminar Inscripcion">
+   </div><a href="{%url 'index_socios' %}" class="btn btn-primary" >Volver</a>
+       </form>
+   
+   </div>
+   
+   </div> 
+   </div>
+
+{% endblock content %} 

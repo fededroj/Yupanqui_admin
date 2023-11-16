@@ -1,0 +1,24 @@
+{%extends 'layouts/base.html'%} 
+{% load static %}
+
+{% block titulo %}ELIMINAR CATEGORIA{% endblock titulo %}
+{% block content %}
+<div class="container">
+ <div class="row">
+
+<div>
+    <form action="" method="post">
+{% csrf_token %}
+<p><strong>¿Desear eliminar la categoria: {{object.categoria}} ?</strong></p>
+
+<button type="submit">confirmar</button>
+<div class="text-center">
+   
+</div><a href="{%url 'lista_categorias' %}" class="btn btn-primary" >Volver</a>
+    </form>
+
+</div>
+
+</div> 
+</div>
+{% endblock content %}

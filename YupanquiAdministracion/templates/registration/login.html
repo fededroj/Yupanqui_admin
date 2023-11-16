@@ -1,0 +1,77 @@
+ <!-- Define que el documento esta bajo el estandar de HTML 5 -->
+<!doctype html>
+{% load static %}
+<!-- Representa la raíz de un documento HTML o XHTML. Todos los demás elementos deben ser descendientes de este elemento. -->
+<html lang="es">
+    
+    <head>
+        
+        <meta charset="utf-8">
+        
+        <title> Iniciar Sesion </title>    
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Videojuegos & Desarrollo">
+        <meta name="description" content="Muestra de un formulario de acceso en HTML y CSS">
+        <meta name="keywords" content="Formulario Acceso, Formulario de LogIn">
+        
+        <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Overpass&display=swap" rel="stylesheet">
+        
+        <!-- Link hacia el archivo de estilos css -->
+        <link rel="stylesheet" href="{% static "css/login.css" %}">
+        
+        <style type="text/css">
+            
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript">
+        
+        </script>
+        
+    </head>
+    
+    <body>
+        
+        <div id="contenedor">
+            <div id="central">
+                <div id="login">
+                    <div class="titulo">
+                        Bienvenido
+                    </div>
+                    <form  action="." method="post" id="loginform">
+                        {% csrf_token %}
+                       {{ form.username}}
+                     
+                        
+                       {{ form.password}}
+                        
+                        <button type="submit" title="Ingresar" name="Ingresar">Login</button>
+                    </form>
+                  
+                </div>
+                
+                <script>      </script>
+                    {% if form.errors %}
+                    var errors=''
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    errors += '{{error}}/n'
+                    {% endfor %}
+                    {% endfor %}
+                   {% for error in form.non_field_errors %}
+                    error += '{{error}}/n'
+                    {% endfor %}
+                    Swal.fire({
+                        title: 'Error!',
+                        text:'errors',
+                        icon:'error'
+                    });
+                   {% endif %}
+          
+            </div>
+        </div>
+            
+    </body>
+</html> 

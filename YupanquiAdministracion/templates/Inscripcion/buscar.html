@@ -1,0 +1,109 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    
+
+    <form method="get" action="{% url 'index_inscripcion' %}" class="mb-3">
+        <div class="input-group">
+            <input type="text" id="q" name="q" class="form-control" placeholder="Nombre o Apellido">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nro. Socio</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Inscripcion</th>
+                <th>Detalle Inscripcion</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for socio in socios %}
+                <tr>
+                    <td>{{ socio.nroSocio }}</td>
+                    <td>{{ socio.nombre }}</td>
+                    <td>{{ socio.apellido }}</td>
+                    
+                    
+                      <td>
+                       <a href="{% url 'inscripcion' socio.id %} "class="btn btn-success btn-sm">Incribir</a>
+                      </td>
+                      <td>
+                       <a href="{% url 'detalle_inscripcion' socio.id %}" class="btn btn-primary btn-sm">Detalle</a>
+                      </td>
+                    <th>
+                       
+                        
+              {% endfor %}         
+                
+           
+        </tbody>
+    </table>
+</div>
+
+
+
+<div id="myModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Mi Modal</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Guardar">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Vertically centered modal -->
+
+
+ <!-- Modal -->
+    <div class= "modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"> 
+        <div class="modal-dialog modal-dialog-centered"  >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="modalLabel">Pago de Cuota</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Guardar">
+                  
+             
+
+                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary">Registrar Pago</button>
+                </div>
+            </form>
+              </div>
+            </div>
+          </div>
+    </div> 
+
+  
+{% endblock content %}
