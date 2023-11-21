@@ -11,7 +11,7 @@ from django.conf.urls.static import static
 
 urlpatterns =[
    
-    path('',views.BuscarSocioView.as_view(),name='index_socios'),
+    path('/',views.BuscarSocioView.as_view(),name='index_socios'),
     path('detalle_socio/<int:pk>', views.DetalleSocio.as_view(), name="detalle_socio"),
     path('crear_socio',views.CrearSocio.as_view(), name='crear_socio'),
     path('editar_socio/<int:pk>',views.EditarSocio.as_view(), name="editar_socio"),

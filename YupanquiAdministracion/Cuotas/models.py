@@ -61,3 +61,4 @@ class CuotaActividad(models.Model):
     
     class Meta:
         unique_together = ('socio', 'actividad', 'mes', 'ano') 
+

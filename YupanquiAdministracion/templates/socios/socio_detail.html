@@ -1,7 +1,9 @@
 {%extends 'layouts/base.html'%} 
-{% load static %}
+{% comment %} {% load static %} {% endcomment %}
 {% block titulo %}DETALLE SOCIO{% endblock titulo %}
+
 {% block content %}
+
 <a href="{%url 'index_socios' %}" class="btn btn-primary" >Volver</a> <a class="btn btn-success btn-md"href="{% url 'inscripcion' socio.id %}">INSCRIBIR A UNA ACTIVIDAD</a>
 <style>
   /* Estilo para el contenedor de la foto carnet */

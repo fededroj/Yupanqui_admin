@@ -24,8 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-30i4u^u@j(=^vc1vrdjet_9#fn40iyoe_k^5lt23c7!66s*w%)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
+# ALLOWED_HOSTS = ['admin_yupanqui.pythonanywhere.com','']
 ALLOWED_HOSTS = []
 
 
@@ -87,12 +88,13 @@ WSGI_APPLICATION = 'YupanquiAdministracion.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Yupanqui2',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
+        'USER': 'root',
+        'PASSWORD': 'admin1234',
         'HOST':'localhost',
-        'PORT': 5432,
+        'PORT': 3306,
+        # adminyupanqui
     }
 }
 

@@ -18,7 +18,7 @@ class BuscarSocioView(LoginRequiredMixin,ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
-            return Socio.objects.filter(nroSocio__icontains=query) | Socio.objects.filter(apellido__icontains=query)
+            return Socio.objects.filter(nroSocio__icontains=query) | Socio.objects.filter(apellido__icontains=query) | Socio.objects.filter(dni__icontains=query)
         return Socio.objects.all()
     
 class DetalleSocio(LoginRequiredMixin,DetailView):

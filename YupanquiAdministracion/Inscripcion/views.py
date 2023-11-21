@@ -8,12 +8,13 @@ from django.views.generic import CreateView, DeleteView, UpdateView, TemplateVie
 from django.views.generic import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-# Create your views here.
+from Administracion.models import Actividad , Categoria
+
 
 
 class BuscarSocio(ListView):
     model = Socio
-    template_name = 'inscripcion/buscar.html'
+    template_name = 'Inscripcion/buscar.html'
     context_object_name = 'socios'
     
   
@@ -106,3 +107,44 @@ class EliminarInscripcion(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
     
     def handle_no_permission(self):
         return redirect('error_permiso')
+###  FILTRO POR ACTIVIDAD Y CATEGORIA
+class Busqueda(TemplateView):
+    
+    template_name = 'Inscripcion/busqueda.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Obtener actividades y categorías para los filtros
+        context['actividades'] = Actividad.objects.all()
+        context['categorias'] = Categoria.objects.all()
+
+        # Obtener parámetros de filtro
+        actividad_id = self.request.GET.get('actividad')
+        categoria_id = self.request.GET.get('categoria')
+
+        # Filtrar inscripciones por actividad y categoría
+        inscripciones = Inscripcion.objects.all()
+        if actividad_id:
+            inscripciones = inscripciones.filter(actividad=actividad_id)
+        if categoria_id:
+            inscripciones = inscripciones.filter(categoria=categoria_id)
+
+        # Obtener detalles de socios y categorías
+        detalles = []
+        for inscripcion in inscripciones:
+            socio = inscripcion.socio
+            detalles.append({
+                'nro_socio': socio.nroSocio,
+                'nombre': socio.nombre,
+                'apellido': socio.apellido,
+                'dni': socio.dni,
+                'categoria': inscripcion.categoria.categoria,  # Ajustar al nombre correcto del atributo
+            })
+
+        # Pasar datos al contexto
+        context['inscripciones'] = detalles
+        context['filtro_actividad'] = int(actividad_id) if actividad_id else None
+        context['filtro_categoria'] = int(categoria_id) if categoria_id else None
+
+        return context

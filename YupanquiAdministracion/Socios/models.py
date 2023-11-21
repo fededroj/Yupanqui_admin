@@ -26,5 +26,6 @@ class Socio(models.Model):
     foto = models.ImageField(upload_to='imagenes',null=True,verbose_name='Foto',blank=True)
     estado = models.IntegerField(choices=ESTADOS,default=1)
     observaciones_importantes=models.TextField(max_length=100, null=True, blank=True, verbose_name='Observaciones Importantes')
+    
     def __str__(self):
         return f"{self.nroSocio}  -  {self.nombre}    {self.apellido}" 

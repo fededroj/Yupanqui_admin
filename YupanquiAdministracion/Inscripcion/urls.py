@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import   BuscarSocio, CrearIncripcion, InscripcionDetailView, EditarInscripcion, EliminarInscripcion
+from .views import  Busqueda, BuscarSocio, CrearIncripcion, InscripcionDetailView, EditarInscripcion, EliminarInscripcion
 
 urlpatterns = [
 
@@ -10,5 +10,7 @@ urlpatterns = [
     path('detalle_inscripcion/<int:socio_id>', InscripcionDetailView.as_view(), name='detalle_inscripcion'),
 
     path('editar-inscripcion/<int:pk>', EditarInscripcion.as_view(), name='editar_inscripcion'),
-    path('eliminar_inscripcion/<int:pk>', EliminarInscripcion.as_view(), name='eliminar_inscripcion')
+    path('eliminar_inscripcion/<int:pk>', EliminarInscripcion.as_view(), name='eliminar_inscripcion'),
+
+    path('busqueda/',Busqueda.as_view(), name='busqueda')
 ]

@@ -1,0 +1,62 @@
+<!-- templates/tu_app_name/detalle_inscripciones.html -->
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+  <h1>Busqueda</h1>
+
+  
+  <form method="get" class="form-inline">
+    <div class="form-group">
+      <label for="actividad" class="mr-2">Filtrar por Actividad:</label>
+      <select class="form-control" name="actividad" id="actividad">
+        <option value="">Todas</option>
+        {% for act in actividades %}
+          <option value="{{ act.id }}" {% if filtro_actividad == act.id %}selected{% endif %}>{{ act.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group mx-2">
+      <label for="categoria" class="mr-2">Filtrar por Categoría:</label>
+      <select class="form-control" name="categoria" id="categoria">
+        <option value="">Todas</option>
+        {% for cat in categorias %}
+          <option value="{{ cat.id }}" {% if filtro_categoria == cat.id %}selected{% endif %}>{{ cat.categoria }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+  </form>
+ 
+  {% if inscripciones %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nro. Socio</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>DNI</th>
+          <th>Categoría</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for inscripcion in inscripciones %}
+          <tr>
+            <td>{{ inscripcion.nro_socio }}</td>
+            <td>{{ inscripcion.nombre }}</td>
+            <td>{{ inscripcion.apellido }}</td>
+            <td>{{ inscripcion.dni }}</td>
+            <td>{{ inscripcion.categoria }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="alert alert-info" role="alert">
+      No hay resultados para mostrar.
+    </div>
+    
+    
+  {% endif %}
+{% endblock %}

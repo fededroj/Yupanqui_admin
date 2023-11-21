@@ -18,7 +18,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),    
     path('lagout/',auth_views.LogoutView.as_view(template_name='accounts/login/'), name='lagout'),
     
-    path('', include("Socios.urls")),    
+    path('/', include("Socios.urls")),    
     path('administracion/',include("Administracion.urls")), 
     path('cuotas/', include("Cuotas.urls")),
     path('inscripcion/', include("Inscripcion.urls")) , 

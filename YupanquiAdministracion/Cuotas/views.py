@@ -1,15 +1,19 @@
-from django.shortcuts import  redirect
+from django.shortcuts import  redirect, render
 from typing import Any
 from django.contrib import messages
-from django.views.generic import CreateView, ListView,  TemplateView
+from django.views.generic import CreateView, ListView,TemplateView
 from .models import CuotaMensual, CuotaActividad
 from .forms import CuotaMensualForm, CuotaActividadForm
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from Socios.models import Socio
-from django.shortcuts import render, HttpResponseRedirect
+from Administracion.models import Actividad
+from django.db.models import Q 
 from .forms import YearFilterForm, YearFilterForm2
 from Administracion.views import ErrorView
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from datetime import date
+from Inscripcion.models import Inscripcion
+from django.shortcuts import get_object_or_404
 
 # index buscador con lista de socios
 class BuscarSocio(ListView):
@@ -23,46 +27,7 @@ class BuscarSocio(ListView):
         query = self.request.GET.get('q')
         if query:
             return Socio.objects.filter(nroSocio__icontains=query) | Socio.objects.filter(apellido__icontains=query) | Socio.objects.filter(nombre__icontains=query)
-        return Socio.objects.all()
-    
-
-
-
-# class PagoCuotaCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
-#     model = CuotaMensual
-#     form_class = CuotaMensualForm
-#     template_name = 'cuotas/cuota_form.html'
-#     success_url= reverse_lazy("index_cuotas")
-
-#     def test_func(self):       
-#         return self.request.user.groups.filter(name='Administrativo').exists()
-    
-#     def handle_no_permission(self):
-#         return redirect('error_permiso')
-    
-#     def get_initial(self):
-#       #  Obtiene el ID del socio desde la URL (debes configurar la URL en consecuencia)
-#         socio_id = self.kwargs.get('socio_id')
-#         return {'socio': socio_id}
-
-
-#     def form_valid(self, form):
-
-#         socio = form.cleaned_data['socio']
-#         mes = form.cleaned_data['mes']
-#         ano = form.cleaned_data['ano']
-
-#         cuota_existente = CuotaMensual.objects.filter(socio=socio, mes=mes, ano=ano, mes_pagado=True).exists()
-
-#         if cuota_existente:
-#             messages.error(self.request, 'Esta cuota ya está registrada para este mes y año.')
-#             return HttpResponseRedirect(reverse('pago_cuota'))  # Redirige nuevamente al formulario
-
-#         response = super().form_valid(form)
-#         messages.success(self.request, 'NO cuota se ha registrado correctamente.')
-#         return response
-
-    
+        return Socio.objects.all()   
 
 class PagoCuotaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = CuotaMensual
@@ -172,4 +137,37 @@ class ReporteCuotasAct(ListView):
         context['form'] = YearFilterForm2()
         # Obtén el ID del socio desde los parámetros de la URL
         context['socio_id'] = self.kwargs.get('socio_id')
+        return context
+    
+#### BUSQUEDA POR ACTIVIDA CUOTAS
+
+class ListaSociosActividadView(ListView):
+    template_name = 'cuotas/lista_socios_actividad.html'
+    model = Inscripcion
+    context_object_name = 'inscripciones'
+class ReporteInscripcionesActividad( ListView):
+    template_name = 'tu_template.html'
+    model = Socio
+    context_object_name = 'socios'
+
+     
+
+    def get_queryset(self):
+        actividad_id = self.request.GET.get('actividad')
+
+        if actividad_id:
+            queryset = Socio.objects.filter(inscripciones__actividad__id=actividad_id)
+
+            # Añade una columna de estado de cuotas a la queryset
+            queryset = queryset.annotate(estado_cuotas=Q(inscripciones__cuotasactividad__fecha_pago__lte=date.today())
+                                                & Q(inscripciones__cuotasactividad__mes_pagado=False))
+
+            return queryset
+        else:
+            return Socio.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['actividades'] = Actividad.objects.all()
+        context['form'] = self.form_class(self.request.GET)
         return context
