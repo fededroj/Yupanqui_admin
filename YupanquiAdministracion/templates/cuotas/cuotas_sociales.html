@@ -27,7 +27,7 @@
         <a href="{% url 'index_cuotas' %}" class="btn btn-primary float-right">volver</a><a href="{% url 'pago_cuota' socio_id=socio_id %}" class="btn btn-primary mx-3">Registrar Pago</a>
     </div>
 </div>
-
+{% if cuotas %}
 <div class="row mt-3">
     <div class="col-md-12">
         <!-- Tabla de cuotas -->
@@ -81,6 +81,9 @@
         
     </div>
 </div>
+{% else %}
+<p>No hay cuotas registradas para este socio.</p>
+{% endif %}
 </div>
 
 

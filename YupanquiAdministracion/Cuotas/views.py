@@ -6,14 +6,13 @@ from .models import CuotaMensual, CuotaActividad
 from .forms import CuotaMensualForm, CuotaActividadForm
 from django.urls import reverse_lazy
 from Socios.models import Socio
-from Administracion.models import Actividad
 from django.db.models import Q 
 from .forms import YearFilterForm, YearFilterForm2
 from Administracion.views import ErrorView
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-from datetime import date
-from Inscripcion.models import Inscripcion
-from django.shortcuts import get_object_or_404
+from datetime import datetime
+
+
 
 # index buscador con lista de socios
 class BuscarSocio(ListView):
@@ -58,25 +57,23 @@ class PagoCuotaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
         messages.success(self.request, 'La cuota social se ha registrado correctamente.')
         return super().form_valid(form)
-class CuotasAnualesListView(ListView):
+class CuotasSocialesListView(ListView):
     model = CuotaMensual  # Especifica el modelo a utilizar
-    template_name = 'cuotas/cuotas_anuales.html'
+    template_name = 'cuotas/cuotas_sociales.html'
     context_object_name = 'cuotas'  # Nombre del objeto en el contexto
+    
 
     
 
     def get_queryset(self):
-        # Obtén el ID del socio desde los parámetros de la URL
         socio_id = self.kwargs.get('socio_id')
-        # Filtra las cuotas para el socio y el año seleccionado en el formulario
-        ano = self.request.GET.get('ano')
+        ano = self.request.GET.get('ano', datetime.now().year)  # Año actual por default
         queryset = CuotaMensual.objects.filter(socio__id=socio_id, ano=ano)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = YearFilterForm()
-        # Obtén el ID del socio desde los parámetros de la URL
+        context['form'] = YearFilterForm2(initial={'ano': datetime.now().year})  # Establecer el año actual como valor predeterminado
         context['socio_id'] = self.kwargs.get('socio_id')
         return context
 
@@ -117,57 +114,23 @@ class PagoCuotaActCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
         messages.success(self.request, 'La cuota de actividad se ha registrado correctamente.')
         return super().form_valid(form)
     
-class ReporteCuotasAct(ListView):
-    model = CuotaActividad  # Especifica el modelo a utilizar
-    template_name = 'cuotas/reporte_cuotas_act.html'
-    context_object_name = 'cuotas'  # Nombre del objeto en el contexto
 
-    
+class ReporteCuotasAct(ListView):
+    model = CuotaActividad
+    template_name = 'cuotas/reporte_cuotas_act.html'
+    context_object_name = 'cuotas'
 
     def get_queryset(self):
-        # Obtén el ID del socio desde los parámetros de la URL
         socio_id = self.kwargs.get('socio_id')
-        # Filtra las cuotas para el socio y el año seleccionado en el formulario
-        ano = self.request.GET.get('ano')
+        ano = self.request.GET.get('ano', datetime.now().year)
         queryset = CuotaActividad.objects.filter(socio__id=socio_id, ano=ano)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = YearFilterForm2()
-        # Obtén el ID del socio desde los parámetros de la URL
-        context['socio_id'] = self.kwargs.get('socio_id')
-        return context
-    
-#### BUSQUEDA POR ACTIVIDA CUOTAS
-
-class ListaSociosActividadView(ListView):
-    template_name = 'cuotas/lista_socios_actividad.html'
-    model = Inscripcion
-    context_object_name = 'inscripciones'
-class ReporteInscripcionesActividad( ListView):
-    template_name = 'tu_template.html'
-    model = Socio
-    context_object_name = 'socios'
-
-     
-
-    def get_queryset(self):
-        actividad_id = self.request.GET.get('actividad')
-
-        if actividad_id:
-            queryset = Socio.objects.filter(inscripciones__actividad__id=actividad_id)
-
-            # Añade una columna de estado de cuotas a la queryset
-            queryset = queryset.annotate(estado_cuotas=Q(inscripciones__cuotasactividad__fecha_pago__lte=date.today())
-                                                & Q(inscripciones__cuotasactividad__mes_pagado=False))
-
-            return queryset
-        else:
-            return Socio.objects.none()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['actividades'] = Actividad.objects.all()
-        context['form'] = self.form_class(self.request.GET)
+        socio_id = self.kwargs.get('socio_id')
+        socio = Socio.objects.get(id=socio_id)  # Obtener el objeto Socio
+        context['form'] = YearFilterForm2(initial={'ano': datetime.now().year})
+        context['socio'] = socio  # Agregar el objeto Socio al contexto
+        context['socio_id'] = socio_id
         return context
